@@ -18,24 +18,26 @@ python app.py
 ```
 
 ## 📁 **Structure**
-├── app.py
+```text
+├── app.py 
 ├── templates/
-│ ├── index.html
-│ └── edit.html
+│   ├── add-item.html
+│   ├── edit.html
+│   ├── home.html
+│   └── show-items.html
 ├── static/
-│ └── style.css
+│   └── style.css
 ├── requirements.txt
 └── README.md
-
-text
+```
 
 ## 📱 **Routes**
 | Method | URL | Description |
 |--------|-----|-------------|
 | GET | `/` | Homepage (Home/Add/Show) |
 | POST | `/add` | Add new task |
-| POST | `/edit` | Load edit form (hidden task_id) |
-| POST | `/update` | Save task changes |
+| POST | `/edit` | Load edit form |
+| POST | `/update` | Update task changes |
 | POST | `/delete` | Delete task |
 
 ## 💾 **Database Schema**
@@ -44,6 +46,6 @@ text
     "_id": ObjectId,
     "task": "string",
     "deadline": "YYYY-MM-DD",
-    "status": "active\|inactive"
+    "status": "active|inactive"
 }
 ```
