@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Info</title>
+    <title>Add Task</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -16,26 +16,24 @@
         <!-- Navigation -->
         <div class="nav">
             <a href="{{ url_for('home') }}">
-                <button class="nav-btn active" onclick="showPage('home')">Info</button>
+                <button class="nav-btn" onclick="showPage('home')">Info</button>
             </a>
             <a href="{{ url_for('add') }}">
-                <button class="nav-btn" onclick="showPage('add')">Add Item</button>
+                <button class="nav-btn active" onclick="showPage('add')">Add Item</button>
             </a>
             <a href="{{ url_for('show') }}">
                 <button class="nav-btn" onclick="showPage('show')">Show Items</button>
             </a>
         </div>
-
-        <!-- Home Page -->
-        <div id="home-page" class="page active">
-            <h5 id="sub-title">Documentation</h5>
-            <div class="description">
-                A simple and clean To-Do application to help you stay organized.
-                Add tasks with deadlines, view your list, and manage your productivity.
-            </div>
+        <!-- Add Items Page -->
+        <div class="page">
+            <h5 id="sub-title">Add New Task</h5>
+            <form class="add-form" action="/add" method="post">
+                <input type="text" name="task" placeholder="Enter task name" required>
+                <input type="date" name="deadline" required>
+                <button type="submit">Add Task</button>
+            </form>
         </div>
-
-        
     </div>
 
 </body>

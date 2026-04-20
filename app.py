@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from bson.objectid import ObjectId
 from pymongo import MongoClient
-from datetime import date
 
 app = Flask("__name__")
 
@@ -13,21 +12,28 @@ collection = db["todoList"]
 
 @app.route("/")
 def home():
-    tasks = collection.find()
-    currentDate = date.today()
-    return render_template("home.html", tasks=tasks, date=currentDate)
+    return render_template("home.html")
 
-@app.route("/add", methods=["POST"])
+@app.route("/show")
+def show():
+    tasks = collection.find()
+    total_items = collection.count_documents({})
+    return render_template("show-items.html", tasks=tasks, total_items=total_items)
+
+@app.route("/add", methods=["GET", "POST"])
 def add():
-    task = request.form.get("task")
-    deadline = request.form.get("deadline")
-    item = {
-            "task": task, 
-            "deadline": deadline,
-            "status": "active"
-           }
-    collection.insert_one(item)
-    return redirect(url_for("home"))
+    if request.method == "GET":
+        return render_template("add-item.html")
+    else:
+        task = request.form.get("task")
+        deadline = request.form.get("deadline")
+        item = {
+                "task": task, 
+                "deadline": deadline,
+                "status": "active"
+            }
+        collection.insert_one(item)
+        return redirect(url_for("show"))
 
 @app.route("/edit/<id>")
 def edit(id):
@@ -47,10 +53,11 @@ def update(id):
                 "deadline": changedDate,
                 "status": changedStatus
                 }})
-    return redirect(url_for("home"))
+    return redirect(url_for("show"))
+
 @app.route("/delete/<id>", methods=["GET"])
 def delete(id):
     collection.delete_one({"_id": ObjectId(id)})
-    return redirect(url_for("home"))
+    return redirect(url_for("show"))
 
 app.run()

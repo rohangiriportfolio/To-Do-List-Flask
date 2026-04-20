@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div id="container">
+
+        <h3 id="title">To-Do List</h3>
+
+        <!-- Navigation -->
+        <div class="nav">
+            <a href="{{ url_for('home') }}">
+                <button class="nav-btn" onclick="showPage('home')">Info</button>
+            </a>
+            <a href="{{ url_for('add') }}">
+                <button class="nav-btn" onclick="showPage('add')">Add Item</button>
+            </a>
+            <a href="{{ url_for('show') }}">
+                <button class="nav-btn active" onclick="showPage('show')">Show Items</button>
+            </a>
+        </div>
+        <!-- Show Items Page -->
+        <div class="page">
+            <h5 id="sub-title">Your Tasks</h5>
+            <span>Items: {{total_items}}</span>
+            <ul class="show-items">
+                {% for task in tasks %}
+                <div class="card">
+                    <li>Task: {{ task.task }}</li>
+                    <li>Deadline: {{ task.deadline }}</li>
+                    <li>Status: {{ task.status }}</li>
+
+                    <div class="actions">
+                        <a href="{{ url_for('edit', id=task._id) }}">
+                            <button type="button">Update</button>
+                        </a>
+                        <a href="{{ url_for('delete', id=task._id) }}">
+                            <button type="button">Delete</button>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>
