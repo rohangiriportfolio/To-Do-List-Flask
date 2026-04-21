@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 from bson.objectid import ObjectId
 from pymongo import MongoClient
+import os
 
-app = Flask("__name__")
+app = Flask(__name__)
 
-mongo_url = "mongodb://localhost:27017/"
+mongo_url = os.getenv("MONGO_URL") or "mongodb://localhost:27017/" 
 
 client = MongoClient(mongo_url)
 db = client["todoDB"]
