@@ -60,4 +60,4 @@ def delete(id):
     collection.delete_one({"_id": ObjectId(id)})
     return redirect(url_for("show"))
 
-app.run()
+app.run(host="0.0.0.0")
